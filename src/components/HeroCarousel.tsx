@@ -95,6 +95,10 @@ export default function HeroCarousel() {
             alt={slide.alt}
             className="h-full w-full object-cover"
             loading={index === 0 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : 'auto'}
+            decoding={index === 0 ? 'sync' : 'async'}
+            width={1920}
+            height={1080}
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70" />

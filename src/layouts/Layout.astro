@@ -29,13 +29,27 @@ const {
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <link rel="apple-touch-icon" href="/images/logo.png" />
 
-    <!-- Google Fonts: Inter -->
+    <!-- Preconnect & DNS Prefetch for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- Preload hero image (LCP optimization) -->
+    <link rel="preload" as="image" href="/images/carrosel-1.jpeg" />
+
+    <!-- Google Fonts: Non-blocking load -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <title>{title}</title>
 
@@ -64,7 +78,7 @@ const {
       }
     })} />
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Ads gtag.js - Loaded async (non-blocking) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10933071014" is:inline></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -92,4 +106,3 @@ const {
     <slot />
   </body>
 </html>
-
