@@ -1,0 +1,81 @@
+---
+export interface Props {
+  year: number;
+  subtitle: string;
+  description: string;
+  index: number;
+}
+
+const { year, subtitle, description, index } = Astro.props;
+const delay = index * 150;
+---
+
+<div
+  class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-accent-light to-emerald-100 p-8 shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 opacity-0 tripadvisor-badge"
+  style={`animation-delay: ${delay}ms`}
+  data-badge
+>
+  <div class="absolute -top-6 -right-6 h-24 w-24 rounded-full bg-primary/10 transition-transform duration-500 group-hover:scale-150" />
+  <div class="absolute -bottom-4 -left-4 h-16 w-16 rounded-full bg-accent/10 transition-transform duration-500 group-hover:scale-150" />
+
+  <div class="relative z-10">
+    <!-- TripAdvisor Icon -->
+    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-md">
+      <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="11" fill="#34E0A1" />
+        <circle cx="8.5" cy="12" r="3" fill="white" />
+        <circle cx="15.5" cy="12" r="3" fill="white" />
+        <circle cx="8.5" cy="12" r="1.5" fill="#1A1A2E" />
+        <circle cx="15.5" cy="12" r="1.5" fill="#1A1A2E" />
+        <path d="M12 7C10 7 8.5 8 8.5 8L12 5.5L15.5 8C15.5 8 14 7 12 7Z" fill="#1A1A2E" />
+      </svg>
+    </div>
+
+    <!-- Badge Header -->
+    <div class="text-center mb-4">
+      <p class="text-sm font-bold uppercase tracking-widest text-primary-dark">Travellers' Choice</p>
+      <p class="text-lg font-bold text-text-dark mt-1">{subtitle}</p>
+      <p class="text-4xl font-extrabold text-primary mt-2">{year}</p>
+      <div class="mx-auto mt-2 h-1 w-12 rounded-full bg-primary" />
+    </div>
+
+    <!-- Stars -->
+    <div class="flex items-center justify-center gap-1 mb-4">
+      {[1,2,3,4,5].map(() => (
+        <svg class="h-4 w-4 text-gold" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+
+    <!-- Description -->
+    <p class="text-xs text-text-muted leading-relaxed text-center">
+      {description}
+    </p>
+  </div>
+</div>
+
+<style>
+  @keyframes badgeFadeIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .tripadvisor-badge.visible {
+    animation: badgeFadeIn 0.6s ease-out forwards;
+  }
+</style>
+
+<script>
+  const badgeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          badgeObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  document.querySelectorAll('[data-badge]').forEach((b) => badgeObserver.observe(b));
+</script>

@@ -1,0 +1,94 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'SLZ Turismo — Passeios em São Luís do Maranhão | Lençóis Maranhenses',
+  description = 'Descubra os melhores passeios em São Luís do Maranhão. Lençóis Maranhenses, centro histórico, praias paradisíacas e muito mais. Reserve agora com a SLZ Turismo!',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:image" content="/images/tour-4x4-lagoas.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "TouristInformationCenter",
+      "name": "SLZ Turismo",
+      "description": description,
+      "url": "https://slzturismo.com.br",
+      "telephone": "+5598983044843",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "São Luís",
+        "addressRegion": "MA",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -2.5297,
+        "longitude": -44.2825
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "São Luís do Maranhão"
+      }
+    })} />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10933071014" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-10933071014');
+
+      // Listener para capturar cliques nos botões de WhatsApp
+      if (typeof window !== 'undefined') {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.addEventListener('click', function(e) {
+            var btnWpp = e.target.closest('a[href*="wa.me"]');
+            if (btnWpp) {
+              gtag('event', 'conversion', {
+                'send_to': 'AW-10933071014/xpfCCLCsoskDEkbZpdDo'
+              });
+            }
+          });
+        });
+      }
+    </script>
+    <!-- End Google tag -->
+  </head>
+  <body class="bg-surface font-sans text-text-dark antialiased">
+    <slot />
+  </body>
+</html>
+
