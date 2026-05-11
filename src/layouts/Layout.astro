@@ -78,29 +78,29 @@ const {
       }
     })} />
 
-    <!-- Google Ads gtag.js - Loaded async (non-blocking) -->
+    <!-- Google Ads (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10933071014" is:inline></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'AW-10933071014');
 
-      // Listener para capturar cliques nos botões de WhatsApp
-      if (typeof window !== 'undefined') {
-        document.addEventListener('DOMContentLoaded', function() {
-          document.body.addEventListener('click', function(e) {
-            var btnWpp = e.target.closest('a[href*="wa.me"]');
-            if (btnWpp) {
-              gtag('event', 'conversion', {
-                'send_to': 'AW-10933071014/xpfCCLCsoskDEkbZpdDo'
-              });
-            }
-          });
+      window.trackWhatsappConversion = function trackWhatsappConversion() {
+        if (typeof gtag !== 'function') return;
+        gtag('event', 'conversion', {
+          send_to: 'AW-10933071014/xpfCCLCsoskDEkbZpdDo',
         });
-      }
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.body.addEventListener('click', function (e) {
+          if (e.target.closest('a[href*="wa.me"]')) {
+            window.trackWhatsappConversion();
+          }
+        });
+      });
     </script>
-    <!-- End Google tag -->
   </head>
   <body class="bg-surface font-sans text-text-dark antialiased">
     <slot />
