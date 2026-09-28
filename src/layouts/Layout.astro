@@ -59,7 +59,7 @@ const {
       "@type": "TouristInformationCenter",
       "name": "SLZ Turismo",
       "description": description,
-      "url": "https://slzturismo.com.br",
+      "url": "https://slzturismo.com",
       "telephone": "+5598983044843",
       "address": {
         "@type": "PostalAddress",
@@ -86,18 +86,11 @@ const {
       gtag('js', new Date());
       gtag('config', 'AW-10933071014');
 
-      window.trackWhatsappConversion = function trackWhatsappConversion() {
-        if (typeof gtag !== 'function') return;
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"], a[href^="tel:"]');
+        if (!a) return;
         gtag('event', 'conversion', {
-          send_to: 'AW-10933071014/xpfCCLCsoskDEkbZpdDo',
-        });
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        document.body.addEventListener('click', function (e) {
-          if (e.target.closest('a[href*="wa.me"]')) {
-            window.trackWhatsappConversion();
-          }
+          send_to: 'AW-10933071014/xpfCCLCsoskDEKbZpd0o',
         });
       });
     </script>
